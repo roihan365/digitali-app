@@ -1,11 +1,10 @@
 {
-    'name': 'Custom HR Attendance with Distance Calculation',
+    'name': 'Digitaliz ERP',
     'version': '1.0',
-    'depends': ['hr_attendance'],
-    'author': 'Your Name',
+    'depends': ['base', 'hr', 'hr_attendance', 'hr_holidays'],
+    'author': 'Digitaliz - Roy',
     'data': [],
     'installable': True,
     'application': False,
     'auto_install': False,
-    'depends': ['base', 'hr', 'hr_attendance', 'hr_holidays'],
 }
