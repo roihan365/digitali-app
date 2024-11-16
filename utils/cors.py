@@ -5,7 +5,7 @@ class CorsHelper:
     @staticmethod
     def cors_headers():
         allowed_origins = [
-            'https://space.digitaliz.id'
+            'http://yhc-app.dtz-internal-only.com'
         ]
 
         origin = request.httprequest.headers.get('Origin')
