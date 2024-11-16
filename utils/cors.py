@@ -5,9 +5,7 @@ class CorsHelper:
     @staticmethod
     def cors_headers():
         allowed_origins = [
-            'http://hulutalent.test',
-            'https://hulu.dtz-internal-only.com',
-            'https://app.hulutarget.id'
+            'https://space.digitaliz.id'
         ]
 
         origin = request.httprequest.headers.get('Origin')
