@@ -324,4 +324,35 @@ class AttendanceAPIController(http.Controller):
             status=200
         )
         
+    @http.route('/api/leaves/type', type='http', auth='apikey', methods=['GET'], csrf=False)
+    def get_leave_type(self, **kwargs):
+        if request.httprequest.method == 'OPTIONS':
+            return request.make_response(json.dumps({}), headers=CorsHelper.cors_headers())
         
+        leave_types = request.env['hr.leave.type'].search([])
+
+        if not leave_types:
+            return request.make_response(
+                json.dumps({
+                    'status': 'error',
+                    'message': 'Leave types not found.'
+                }),
+                headers=[('Content-Type', 'application/json')] + CorsHelper.cors_headers(),
+                status=404
+            )
+
+        result = []
+        for leave_type in leave_types:
+            result.append({
+                'id': leave_type.id,
+                'name': leave_type.name,
+            })
+
+        return request.make_response(
+            json.dumps({
+                'status': 'success',
+                'data': result
+            }),
+            headers=[('Content-Type', 'application/json')] + CorsHelper.cors_headers(),
+            status=200
+        )
