@@ -185,7 +185,7 @@ class AttendanceAPIController(http.Controller):
                 'request_date_from': start_date,
                 'request_date_to': end_date,
                 'name': reason,
-                'state': 'validate',
+                'state': 'confirm',
             })
 
             return request.make_response(
@@ -346,6 +346,7 @@ class AttendanceAPIController(http.Controller):
             result.append({
                 'id': leave_type.id,
                 'name': leave_type.name,
+                'leave_type': leave_type.leave_validation_type
             })
 
         return request.make_response(
