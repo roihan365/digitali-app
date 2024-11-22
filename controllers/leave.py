@@ -1,6 +1,7 @@
 from odoo import http, fields , _
 from odoo.http import request
 import json
+from datetime import datetime
 from ..utils.cors import CorsHelper
 
 class AttendanceAPIController(http.Controller):
@@ -188,10 +189,22 @@ class AttendanceAPIController(http.Controller):
                 'state': 'confirm',
             })
 
+            # Extract relevant fields from the leave record for JSON serialization
+            leave_data = {
+                'id': leave_record.id,
+                'employee_id': leave_record.employee_id.id,
+                'holiday_status_id': leave_record.holiday_status_id.id,
+                'request_date_from': leave_record.request_date_from.strftime('%Y-%m-%d') if leave_record.request_date_from else None,
+                'request_date_to': leave_record.request_date_to.strftime('%Y-%m-%d') if leave_record.request_date_to else None,
+                'name': leave_record.name,
+                'state': leave_record.state,
+            }
+
             return request.make_response(
                 json.dumps({
                     'status': 'success',
-                    'message': 'Leave request successfully created'
+                    'message': 'Leave request successfully created',
+                    'data': leave_data
                 }),
                 headers=[('Content-Type', 'application/json')] + CorsHelper.cors_headers(),
                 status=200
