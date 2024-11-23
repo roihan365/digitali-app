@@ -77,10 +77,21 @@ class AttendanceAPIController(http.Controller):
                 leave_record.action_approve()
             elif (action == 'refuse'):
                 leave_record.action_refuse()
+                
+            leave_data = {
+                'id': leave_record.id,
+                'employee_id': leave_record.employee_id.id,
+                'holiday_status_id': leave_record.holiday_status_id.id,
+                'request_date_from': leave_record.request_date_from.strftime('%Y-%m-%d') if leave_record.request_date_from else None,
+                'request_date_to': leave_record.request_date_to.strftime('%Y-%m-%d') if leave_record.request_date_to else None,
+                'name': leave_record.name,
+                'state': leave_record.state,
+            }
             return request.make_response(
                 json.dumps({
                     'status': 'success',
-                    'message': f'Leave {action} successfully executed'
+                    'message': f'Leave {action} successfully executed',
+                    'data': leave_data
                 }),
                 headers=[('Content-Type', 'application/json')] + CorsHelper.cors_headers(),
                 status=200
